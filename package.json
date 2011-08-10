@@ -1,0 +1,13 @@
+{
+    "name"    : "redis-mock",
+    "version" : "v0.1.1-1dev",
+    "description" : "A library for mocking Redis in JavaScript code",
+    "keywords" : [ "redis", "mock", "test" ],
+    "author" : {
+        "name" : "Adam Victor Nazareth Brandizzi",
+        "email" : "brandizzi+redis-mock@gmail.com",
+        "url" : "http://sites.google.com/site/brandizzi"
+    },
+    "files" : [ "redis-mock.js" ],
+    "main" : "redis-mock.js"
+}
