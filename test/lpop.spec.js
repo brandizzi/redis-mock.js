@@ -70,4 +70,17 @@ describe('Mocked "lpop" method', function() {
 	expect(value).toBe(true);    
   });
 
+  it("should work on keys which are not set - and not set them", function() {
+    var client = redis.createClient();
+    client.lpush('nolist', 'element');
+    var value = client.lpop('list', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toBeNull();
+    });
+	expect(value).toBe(true);    
+	client.set('nolist', 'a string, actually', function (err, data) {
+        expect(err).toBeNull();
+        expect(data).toEqual("OK");
+	});
+  });
 });
