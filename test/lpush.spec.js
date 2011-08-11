@@ -39,4 +39,24 @@ describe('Mocked "lpush" method', function() {
 	expect(value).toBe(true);
   });
 
+  it("should fail on non-list", function() {
+    var client = redis.createClient();
+    client.set('nonlist', 'some string');
+    var value = client.lpush('nonlist', 'element', function(err, data) {
+        expect(err).toNotBe(null);
+        expect(data).toBeUndefined();
+    });
+	expect(value).toBe(true);    
+	client.get('nonlist', function (err, data) {
+	    expect(err).toBe(null);
+        expect(data).toEqual("some string");
+	});
+  });
+
+  it("should not throw exception on non-list if no callback given", function() {
+    var client = redis.createClient();
+    client.set('nonlist', 'some string');
+    client.lpush('nonlist');
+  });
+
 });

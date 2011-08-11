@@ -46,14 +46,16 @@ function createClient() {
       	}
         return true;
       },
-      lpush : function (list, element, callback) {
-        var value = this.__map[list];
-        var err = null;
-        if (typeof value == "undefined" || value == null) {
-          value = this.__map[list] = [];
+      lpush : function (listName, element, callback) {
+        var value = 0, 
+          list = this.__map[listName],
+          err = null;
+        if (typeof list == "undefined" || list == null) {
+           list = this.__map[listName] = [];
         }
-        if (typeof value == "object") {
-          value.push(element);
+        if (typeof list == "object") {
+          list.push(element);
+          value = list.length;
         } else {
           value = undefined;
           err = __createError(
@@ -62,7 +64,7 @@ function createClient() {
         }
         
         if (typeof callback == "function") {
-          callback(null, value.length);
+          callback(err, value);
         }
         return true;
       },      
