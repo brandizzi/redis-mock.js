@@ -36,7 +36,6 @@ describe('Mocked "lpush" method', function() {
         expect(err).toBeNull();
         expect(data).toBe(2);
     });
-
 	expect(value).toBe(true);
   });
 

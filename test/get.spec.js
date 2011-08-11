@@ -1,6 +1,8 @@
 redis = require('../redis-mock');
 sinon = require('sinon');
 
+redis.showError(false);
+
 describe('Mocked "get" method', function() {
 
   it("should exist", function() {
@@ -26,13 +28,20 @@ describe('Mocked "get" method', function() {
 	expect(value).toBe(true);    
   });
 
-  it("should retrieve set value", function() {
+  it("should fail on lists", function() {
     var client = redis.createClient();
-    client.set("key", "value");
-    var value = client.get("key", function(err, data) {
-        expect(err).toBeNull();
-        expect(data).toEqual("value");
+    client.lpush('list', 'element');
+    var value = client.get("list", function(err, data) {
+        expect(err).toNotBe(null);
+        expect(data).toBeUndefined();
     });
 	expect(value).toBe(true);    
+  });
+
+  it("should not raise error if fail on lists", function() {
+    var client = redis.createClient();
+    client.lpush('list', 'element');
+    var value = client.get("list");
+    expect(value).toBe(true);    
   });
 });
