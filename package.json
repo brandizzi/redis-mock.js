@@ -1,13 +1,18 @@
 {
     "name"    : "redis-mock",
-    "version" : "v0.1.1-1dev",
+    "version" : "v0.1.1-2dev",
     "description" : "A library for mocking Redis in JavaScript code",
     "keywords" : [ "redis", "mock", "test" ],
+    "homepage" : "https://bitbucket.org/brandizzi/redis-mock.js",
     "author" : {
         "name" : "Adam Victor Nazareth Brandizzi",
         "email" : "brandizzi+redis-mock@gmail.com",
         "url" : "http://sites.google.com/site/brandizzi"
     },
     "files" : [ "redis-mock.js" ],
-    "main" : "redis-mock.js"
+    "main" : "redis-mock.js",
+    "repository" : {
+        "type" : "hg",
+        "url" : "https://bitbucket.org/brandizzi/redis-mock.js"
+    }
 }
