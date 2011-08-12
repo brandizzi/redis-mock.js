@@ -122,6 +122,8 @@ RedisClient.prototype =  {
     if (typeof list == "undefined" || list == null) {
       value = null;
     } else if (list.constructor == Array) {
+      if (start == -1) start = list.length;
+      if (end == -1) end = list.length;
       value = list.slice(start, end+1);
     }
     if (typeof callback == "function") {
