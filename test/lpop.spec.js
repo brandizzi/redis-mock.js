@@ -1,7 +1,10 @@
-redis = require('../redis-mock');
+sc = require('./sc');
 sinon = require('sinon');
 
+redis = sc.redis;
+
 describe('Mocked "lpop" method', function() {
+  beforeEach(sc.clearDatabase);
 
   it("should exist", function() {
     var client = redis.createClient();
@@ -72,8 +75,7 @@ describe('Mocked "lpop" method', function() {
 
   it("should work on keys which are not set - and not set them", function() {
     var client = redis.createClient();
-    client.lpush('nolist', 'element');
-    var value = client.lpop('list', function(err, data) {
+    var value = client.lpop('nolist', function(err, data) {
         expect(err).toBeNull();
         expect(data).toBeNull();
     });
@@ -82,5 +84,42 @@ describe('Mocked "lpop" method', function() {
         expect(err).toBeNull();
         expect(data).toEqual("OK");
 	});
+  });
+
+  it("should return null when remove last", function() {
+    var client = redis.createClient();
+    client.lpush('list', 'element');
+    var value = client.lpop('list', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toEqual('element');
+    });
+	expect(value).toBe(true);    
+     value = client.lpop('list', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toBeNull();
+    });
+	expect(value).toBe(true);    
+  });
+
+  it("should erase list when remove last one", function() {
+    var client = redis.createClient();
+    client.lpush('list', 'element');
+    var value = client.lpop('list', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toEqual('element');
+    });
+    value = client.set('list', 'list?!', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toEqual("OK");
+    });
+    value = client.get('list', function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toEqual("list?!");
+    });
+  });
+
+  beforeEach(function() {
+    var client = redis.createClient();
+    client.flushall();
   });
 });

@@ -1,7 +1,10 @@
-redis = require('../redis-mock');
+sc = require('./sc');
 sinon = require('sinon');
 
+redis = sc.redis;
+
 describe('Mocked "lpush" method', function() {
+  beforeEach(sc.clearDatabase);
 
   it("should exist", function() {
     var client = redis.createClient();

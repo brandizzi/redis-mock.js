@@ -1,4 +1,4 @@
-redis = require('../redis-mock');
+redis = require('./sc').redis;
 sinon = require('sinon');
 
 describe('Redis mock library', function() {

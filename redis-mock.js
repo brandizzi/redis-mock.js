@@ -1,4 +1,4 @@
-var __lastClient = null, __showError = true;
+var __lastClient = null, __showError = false;
 
 function createClient() {
   __lastClient =  {
@@ -74,7 +74,11 @@ function createClient() {
         if (typeof list == "undefined" || list == null) {
           value = null;
         } else if (list.constructor == Array) {
-          value = list.pop();
+          if (list.length != 0) {
+            value = list.pop();
+          } else {
+            value = null;
+          }
         } else {
           value = undefined;
           err = __createError(
@@ -86,6 +90,14 @@ function createClient() {
       	} else if (err) {
       	  __printError(err);
       	}
+        return true;
+      },
+      flushall : function()  {
+        // Does nothing for now
+        return true;
+      },
+      end : function()  {
+        // Does nothing for now
         return true;
       },
       __map : {},

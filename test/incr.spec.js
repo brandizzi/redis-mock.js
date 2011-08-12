@@ -1,10 +1,11 @@
-redis = require('../redis-mock');
+sc = require('./sc');
 sinon = require('sinon');
 
-redis.showError(false);
+redis = sc.redis;
 
 describe('Mocked "incr" method', function() {
-
+  beforeEach(sc.clearDatabase);
+  
   it("should exist", function() {
     var client = redis.createClient();
     var value = client.incr("key");

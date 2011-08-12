@@ -1,14 +1,16 @@
-redis = require('../redis-mock');
+sc = require('./sc')
 sinon = require('sinon');
 
-redis.showError(false);
+redis = sc.redis;
 
 describe('Mocked "get" method', function() {
+  beforeEach(sc.clearDatabase);
 
   it("should exist", function() {
     var client = redis.createClient();
-    var value = client.get("key");
+    var value = client.get("key", redis.print);
 	expect(value).toBe(true);    
+	client.end();
   });
 
   it("should call callback", function() {
@@ -17,6 +19,7 @@ describe('Mocked "get" method', function() {
     var value = client.get("key", spy);
     expect(spy.called).toBeTruthy();
 	expect(value).toBe(true);    
+	client.end();
   });
 
   it("should pass parameters to callback", function() {
@@ -26,6 +29,7 @@ describe('Mocked "get" method', function() {
         expect(data).toBeNull();
     });
 	expect(value).toBe(true);    
+	client.end();
   });
 
   it("should fail on lists", function() {
@@ -36,6 +40,7 @@ describe('Mocked "get" method', function() {
         expect(data).toBeUndefined();
     });
 	expect(value).toBe(true);    
+	client.end();
   });
 
   it("should not raise error if fail on lists", function() {
@@ -43,5 +48,7 @@ describe('Mocked "get" method', function() {
     client.lpush('list', 'element');
     var value = client.get("list");
     expect(value).toBe(true);    
+	client.end();
   });
+  
 });
