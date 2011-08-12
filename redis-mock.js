@@ -68,9 +68,8 @@ function createClient() {
         }
         return true;
       },      
-      lpop : function(listKey, callback) {
-        var list = this.__map[listKey], err = null;
-        
+      lpop : function(listName, callback) {
+        var value = null, list = this.__map[listName], err = null;
         if (typeof list == "undefined" || list == null) {
           value = null;
         } else if (list.constructor == Array) {
@@ -93,8 +92,36 @@ function createClient() {
         return true;
       },
       llen : function(listName, callback) {
+        var value = null, list = this.__map[listName], err = null;
+        
+        if (typeof list == "undefined" || list == null) {
+          value = null;
+        } else if (list.constructor == Array) {
+          value = list.length;
+        } else {
+          value = undefined;
+          err = __createError(
+            'Error: ERR Operation against a key holding the wrong kind of value'
+          );
+        }
         if (typeof callback == "function") {
-          callback(null, null);
+          callback(err, value);
+        } else {
+      	  __printError(err);
+        }
+        return true;
+      },
+      lrange : function(listName, start, end, callback) {
+        var value = null, list = this.__map[listName], err = null;
+        if (typeof list == "undefined" || list == null) {
+          value = null;
+        } else if (list.constructor == Array) {
+          value = list.slice(start, end+1);
+        }
+        if (typeof callback == "function") {
+          callback(err, value);
+        } else {
+      	  __printError(err);
         }
         return true;
       },
