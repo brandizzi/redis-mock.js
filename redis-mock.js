@@ -92,12 +92,16 @@ function createClient() {
       	}
         return true;
       },
-      flushall : function()  {
-        // Does nothing for now
+      llen : function(listName, callback) {
+        if (typeof callback == "function") {
+          callback(null, null);
+        }
         return true;
       },
-      end : function()  {
-        // Does nothing for now
+      flushall : function () {
+        return true;
+      },
+      close : function() {
         return true;
       },
       __map : {},
