@@ -1,6 +1,6 @@
 {
     "name"    : "redis-mock",
-    "version" : "v0.1.1-3dev",
+    "version" : "v0.1.2-1dev",
     "description" : "A library for mocking Redis in JavaScript code",
     "keywords" : [ "redis", "mock", "test" ],
     "homepage" : "https://bitbucket.org/brandizzi/redis-mock.js",
