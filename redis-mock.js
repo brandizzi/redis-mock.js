@@ -53,7 +53,7 @@ function createClient() {
         if (typeof list == "undefined" || list == null) {
            list = this.__map[listName] = [];
         }
-        if (typeof list == "object") {
+        if (list.constructor == Array) {
           list.push(element);
           value = list.length;
         } else {
@@ -73,7 +73,7 @@ function createClient() {
         
         if (typeof list == "undefined" || list == null) {
           value = null;
-        } else if (typeof list == "object") {
+        } else if (list.constructor == Array) {
           value = list.pop();
         } else {
           value = undefined;
@@ -100,6 +100,7 @@ function lastClient() {
 function showError(value) {
   __showError = value;
 }
+
 
 function __createError(message, type, arguments, stack) {
   return { 
